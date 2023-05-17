@@ -14,9 +14,9 @@ import java.time.Duration;
 import static com.codeborne.selenide.Selenide.*;
 
 class MoneyTransferTest {
+    int replenishmentAmount = 1000;
     BalancePage balancePage = new BalancePage();
     CardReplenishmentPage cardReplenishmentPage = new CardReplenishmentPage();
-
     CardData cardData = new CardData();
 
     @Test
@@ -62,7 +62,7 @@ class MoneyTransferTest {
         verificationPage.validVerify(verificationCode);
         balancePage.сlickingRechargeCardOne();
         cardReplenishmentPage.setVerification();
-        cardReplenishmentPage.transfer("1000", cardData.getCardSecond());
+        cardReplenishmentPage.transfer(replenishmentAmount, cardData.getCardSecond());
         balancePage.balanceUpdate();
         var cardOne = balancePage.balanceCardOne();
         var cardTwo = balancePage.balanceCardTwo();

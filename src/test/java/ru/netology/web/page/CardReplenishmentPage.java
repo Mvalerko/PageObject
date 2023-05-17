@@ -2,7 +2,7 @@ package ru.netology.web.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-
+import java.text.DecimalFormat;
 import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -17,9 +17,11 @@ public class CardReplenishmentPage {
         verificationElement.shouldHave(Condition.text("Пополнение карты"), Duration.ofSeconds(15)).shouldBe(Condition.visible);
     }
 
-    public void transfer(String amountTop, String fromCard) {
+    public void transfer(int amountTop, String fromCard) {
+        DecimalFormat DFormat = new DecimalFormat("#");
+        String amountTopString = DFormat.format(amountTop);
         amount.click();
-        amount.setValue(amountTop);
+        amount.setValue(amountTopString);
         from.click();
         from.setValue(fromCard);
         transfer.click();
