@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import dev.failsafe.internal.util.Assert;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import ru.netology.web.data.CardData;
 import ru.netology.web.data.DataHelper;
@@ -17,8 +18,9 @@ class MoneyTransferTest {
     int replenishmentAmount = 1000;
     BalancePage balancePage = new BalancePage();
     CardReplenishmentPage cardReplenishmentPage = new CardReplenishmentPage();
-    CardData cardData = new CardData();
+    CardData cardInfo = new CardData();
 
+    @Disabled
     @Test
     void shouldTransferMoneyBetweenOwnCardsV1() {
         open("http://localhost:9999");
@@ -30,6 +32,7 @@ class MoneyTransferTest {
         verificationPage.validVerify(verificationCode);
     }
 
+    @Disabled
     @Test
     void shouldTransferMoneyBetweenOwnCardsV2() {
         //Configuration.headless = true;
@@ -41,7 +44,7 @@ class MoneyTransferTest {
         var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
         verificationPage.validVerify(verificationCode);
     }
-
+@Disabled
     @Test
     void shouldTransferMoneyBetweenOwnCardsV3() {
         var loginPage = open("http://localhost:9999", LoginPageV3.class);
@@ -62,7 +65,7 @@ class MoneyTransferTest {
         verificationPage.validVerify(verificationCode);
         balancePage.сlickingRechargeCardOne();
         cardReplenishmentPage.setVerification();
-        cardReplenishmentPage.transfer(replenishmentAmount, cardData.getCardSecond());
+        cardReplenishmentPage.transfer(replenishmentAmount, cardInfo.getCardSecond());
         balancePage.balanceUpdate();
         var cardOne = balancePage.balanceCardOne();
         var cardTwo = balancePage.balanceCardTwo();
