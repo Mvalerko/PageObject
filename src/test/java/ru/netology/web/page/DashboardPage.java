@@ -13,9 +13,4 @@ public class DashboardPage {
     heading.shouldBe(visible);
   }
 
-  public String balance (){
-    String cards = String.valueOf($$(".list__item div"));
-    return cards;
-  }
-
 }
