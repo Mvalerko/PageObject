@@ -62,8 +62,7 @@ class MoneyTransferTest {
         verificationPage.validVerify(verificationCode);
         balancePage.сlickingRechargeCardOne();
         cardReplenishmentPage.setVerification();
-        cardReplenishmentPage.transfer("1000", "5559 0000 0000 0002");
-        System.out.println("Номер второй карты _ "+cardData.);
+        cardReplenishmentPage.transfer("1000", cardData.getCardSecond());
         balancePage.balanceUpdate();
         var cardOne = balancePage.balanceCardOne();
         var cardTwo = balancePage.balanceCardTwo();
