@@ -17,48 +17,17 @@ import java.time.Duration;
 import static com.codeborne.selenide.Selenide.*;
 
 class MoneyTransferTest {
-    int replenishmentAmount = 3000;
+    int testableSumUnits = 4;
+    int testableSumTens = 13;
+    int testableSumHundreds = 339;
+    int testableSumThousands = 2832;
+
     BalancePage balancePage = new BalancePage();
     CardReplenishmentPage cardReplenishmentPage = new CardReplenishmentPage();
     CardData cardData = new CardData();
 
-
-    @Disabled
     @Test
-    void shouldTransferMoneyBetweenOwnCardsV1() {
-        open("http://localhost:9999");
-        var loginPage = new LoginPageV1();
-//    var loginPage = open("http://localhost:9999", LoginPageV1.class);
-        var authInfo = DataHelper.getAuthInfo();
-        var verificationPage = loginPage.validLogin(authInfo);
-        var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
-        verificationPage.validVerify(verificationCode);
-    }
-
-    @Disabled
-    @Test
-    void shouldTransferMoneyBetweenOwnCardsV2() {
-        //Configuration.headless = true;
-        open("http://localhost:9999");
-        var loginPage = new LoginPageV2();
-//    var loginPage = open("http://localhost:9999", LoginPageV2.class);
-        var authInfo = DataHelper.getAuthInfo();
-        var verificationPage = loginPage.validLogin(authInfo);
-        var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
-        verificationPage.validVerify(verificationCode);
-    }
-@Disabled
-    @Test
-    void shouldTransferMoneyBetweenOwnCardsV3() {
-        var loginPage = open("http://localhost:9999", LoginPageV3.class);
-        var authInfo = DataHelper.getAuthInfo();
-        var verificationPage = loginPage.validLogin(authInfo);
-        var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
-        verificationPage.validVerify(verificationCode);
-    }
-
-    @Test
-    void transferMoneyTest() {
+    void transferMoneyUnitsTest() {
         Configuration.headless = true;
         open("http://localhost:9999");
         var loginPage = new LoginPageV2();
@@ -71,8 +40,85 @@ class MoneyTransferTest {
         var cardTwoBeforeTransfer = balancePage.balanceCardTwo();
         balancePage.сlickingRechargeCardTwo();
         cardReplenishmentPage.setVerification();
-        cardReplenishmentPage.transfer(replenishmentAmount, CardData.getCardFirstInfo().getNumber());
-        int[] expectedBalanceArray = cardData.expectedBalance(replenishmentAmount, CardData.getCardFirstInfo().getNumber(),cardOneBeforeTransfer,cardTwoBeforeTransfer);
+        cardReplenishmentPage.transfer(testableSumUnits, CardData.getCardFirstInfo().getNumber());
+        int[] expectedBalanceArray = cardData.expectedBalance(testableSumUnits, CardData.getCardFirstInfo().getNumber(),cardOneBeforeTransfer,cardTwoBeforeTransfer);
+        balancePage.balanceUpdate();
+        var cardOne = balancePage.balanceCardOne();
+        var cardTwo = balancePage.balanceCardTwo();
+        int expectedCardOne = expectedBalanceArray[0];
+        int actualCardOne = cardOne;
+        Assertions.assertEquals(expectedCardOne, actualCardOne);
+        int expectedCardTwo = expectedBalanceArray[1];
+        int actualCardTwo = cardTwo;
+        Assertions.assertEquals(expectedCardTwo, actualCardTwo);
+    }
+    //@Disabled
+    @Test
+    void transferMoneyHundredsTest() {
+        Configuration.headless = true;
+        open("http://localhost:9999");
+        var loginPage = new LoginPageV2();
+        var authInfo = DataHelper.getAuthInfo();
+        var verificationPage = loginPage.validLogin(authInfo);
+        var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
+        verificationPage.validVerify(verificationCode);
+        var cardOneBeforeTransfer = balancePage.balanceCardOne();
+        var cardTwoBeforeTransfer = balancePage.balanceCardTwo();
+        balancePage.сlickingRechargeCardOne();
+        cardReplenishmentPage.setVerification();
+        cardReplenishmentPage.transfer(testableSumHundreds, CardData.getCardSecondInfo().getNumber());
+        int[] expectedBalanceArray = cardData.expectedBalance(testableSumHundreds, CardData.getCardSecondInfo().getNumber(),cardOneBeforeTransfer,cardTwoBeforeTransfer);
+        balancePage.balanceUpdate();
+        var cardOne = balancePage.balanceCardOne();
+        var cardTwo = balancePage.balanceCardTwo();
+        int expectedCardOne = expectedBalanceArray[0];
+        int actualCardOne = cardOne;
+        Assertions.assertEquals(expectedCardOne, actualCardOne);
+        int expectedCardTwo = expectedBalanceArray[1];
+        int actualCardTwo = cardTwo;
+        Assertions.assertEquals(expectedCardTwo, actualCardTwo);
+    }
+    @Test
+    void transferMoneyThousandsTest() {
+        Configuration.headless = true;
+        open("http://localhost:9999");
+        var loginPage = new LoginPageV2();
+        var authInfo = DataHelper.getAuthInfo();
+        var verificationPage = loginPage.validLogin(authInfo);
+        var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
+        verificationPage.validVerify(verificationCode);
+        var cardOneBeforeTransfer = balancePage.balanceCardOne();
+        var cardTwoBeforeTransfer = balancePage.balanceCardTwo();
+        balancePage.сlickingRechargeCardOne();
+        cardReplenishmentPage.setVerification();
+        cardReplenishmentPage.transfer(testableSumThousands, CardData.getCardSecondInfo().getNumber());
+        int[] expectedBalanceArray = cardData.expectedBalance(testableSumThousands, CardData.getCardSecondInfo().getNumber(),cardOneBeforeTransfer,cardTwoBeforeTransfer);
+        balancePage.balanceUpdate();
+        var cardOne = balancePage.balanceCardOne();
+        var cardTwo = balancePage.balanceCardTwo();
+        int expectedCardOne = expectedBalanceArray[0];
+        int actualCardOne = cardOne;
+        Assertions.assertEquals(expectedCardOne, actualCardOne);
+        int expectedCardTwo = expectedBalanceArray[1];
+        int actualCardTwo = cardTwo;
+        Assertions.assertEquals(expectedCardTwo, actualCardTwo);
+    }
+    @Test
+    void transferMoneyTensTest() {
+        Configuration.headless = true;
+        open("http://localhost:9999");
+        var loginPage = new LoginPageV2();
+        var authInfo = DataHelper.getAuthInfo();
+        var verificationPage = loginPage.validLogin(authInfo);
+        var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
+        verificationPage.validVerify(verificationCode);
+        //balancePage.сlickingRechargeCardOne();
+        var cardOneBeforeTransfer = balancePage.balanceCardOne();
+        var cardTwoBeforeTransfer = balancePage.balanceCardTwo();
+        balancePage.сlickingRechargeCardTwo();
+        cardReplenishmentPage.setVerification();
+        cardReplenishmentPage.transfer(testableSumTens, CardData.getCardFirstInfo().getNumber());
+        int[] expectedBalanceArray = cardData.expectedBalance(testableSumTens, CardData.getCardFirstInfo().getNumber(),cardOneBeforeTransfer,cardTwoBeforeTransfer);
         balancePage.balanceUpdate();
         var cardOne = balancePage.balanceCardOne();
         var cardTwo = balancePage.balanceCardTwo();
