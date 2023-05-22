@@ -8,16 +8,16 @@ import java.time.Duration;
 import static com.codeborne.selenide.Selenide.$;
 
 public class CardReplenishmentPage {
-    private SelenideElement verificationElement = $(".heading_size_xl");
-    private SelenideElement amount = $("[data-test-id='amount'] > [data-test-id='amount'] input");
-    private SelenideElement from = $("[data-test-id='from'] input");
-    private SelenideElement transfer = $("[data-test-id='action-transfer']");
+    private static SelenideElement verificationElement = $(".heading_size_xl");
+    private static SelenideElement amount = $("[data-test-id='amount'] > [data-test-id='amount'] input");
+    private static SelenideElement from = $("[data-test-id='from'] input");
+    private static SelenideElement transfer = $("[data-test-id='action-transfer']");
 
-    public void setVerification() {
+    public static void setVerification() {
         verificationElement.shouldHave(Condition.text("Пополнение карты"), Duration.ofSeconds(15)).shouldBe(Condition.visible);
     }
 
-    public void transfer(int amountTop, String fromCard) {
+    public static DashboardPage transfer(int amountTop, String fromCard) {
         DecimalFormat DFormat = new DecimalFormat("#");
         String amountTopString = DFormat.format(amountTop);
         amount.click();
@@ -25,5 +25,6 @@ public class CardReplenishmentPage {
         from.click();
         from.setValue(fromCard);
         transfer.click();
+        return new DashboardPage();
     }
 }
